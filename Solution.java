@@ -61,7 +61,7 @@ public class Solution {
     *
     * If the value "max_bits_toChange" is large enoguh to make both all mandatory changes 
     * and those changes that reduce as much as possible the value of a_binary, 
-    * then the method will run the completely the two loops.
+    * then the method will run completely the two loops.
     */
   private static void calculateBinaryResults() {
     for (int i = 0; i < c_binary.length && max_bits_toChange >= 0; i++) {
@@ -191,6 +191,7 @@ public class Solution {
     *
     * All this is necessary since for each four-bit set, we have to compare the value 
     * of the bits index by index and, if needed, make changes so that:
+    *
     * (a_binary[i].charAt(index)) (bitwise OR) (b_binary[I].charAt(index)) 
     * = c_binary[i].charAt(index).
     */
