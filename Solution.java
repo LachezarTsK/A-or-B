@@ -13,10 +13,10 @@ public class Solution {
    */
   private static Map<Character, String> hexadecimalToBinary;
   private static Map<String, Character> binaryToHexadecimal;
-  private static int max_bits_toChange;
   private static StringBuilder[] a_binary;
   private static StringBuilder[] b_binary;
   private static StringBuilder[] c_binary;
+  private static int max_bits_toChange;
   
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -34,28 +34,27 @@ public class Solution {
       b_binary = createArray_hexadecimalToBinary(b_hexadecimal);
       c_binary = createArray_hexadecimalToBinary(c_hexadecimal);
 
-      calculateResults();
-      printResults();
+      calculateBinaryResults();
+      convertBinaryResultsToHexadecimal_printHexadecimalResults();
     }
     scanner.close();
   }
 
-  private static void printResults() {
-
+  private static void convertBinaryResultsToHexadecimal_printHexadecimalResults() {
     if (max_bits_toChange < 0) {
       System.out.println(-1);
       return;
     }
-
     String a_resultsHexadecimal = createString_binaryToHexadecimal(a_binary);
     String b_resultsHexadecimal = createString_binaryToHexadecimal(b_binary);
-
     System.out.println(a_resultsHexadecimal);
     System.out.println(b_resultsHexadecimal);
   }
 
   /**
-    * Calculates the total results. The method runs as long as the value "max_bits_toChange" 
+    * Calculates the total results in binary representation. 
+    *
+    * The method runs as long as the value "max_bits_toChange" 
     * allows to make changes in "a_binary" and/or "b_binary"
     *
     * If the value "max_bits_toChange" is large enough to make only all mandatory changes, 
@@ -65,12 +64,10 @@ public class Solution {
     * and those changes that reduce as much as possible the value of a_binary, 
     * then the method will run the completely the two loops.
     */
-  private static void calculateResults() {
-
+  private static void calculateBinaryResults() {
     for (int i = 0; i < c_binary.length && max_bits_toChange >= 0; i++) {
       makeMandatoryChanges_a_bitwiseOR_b_equals_c(i);
     }
-
     for (int i = 0; i < c_binary.length && max_bits_toChange > 0; i++) {
       reduceValueOf_a_when_a_bitwiseOR_b_equals_c(i);
     }
@@ -87,7 +84,6 @@ public class Solution {
   * The method is initiated as long as the value of "max_bits_toChange" is not negative.
   */
   private static void makeMandatoryChanges_a_bitwiseOR_b_equals_c(int index) {
-
     for (int i = 0; i < 4; i++) {
       if (c_binary[index].charAt(i) == '1') {
         if (a_binary[index].charAt(i) == '0' && b_binary[index].charAt(i) == '0') {
@@ -117,8 +113,7 @@ public class Solution {
   * With every change, the value of "max_bits_toChange" is decreased with one.  
   * The method is initiated as long as the value of "max_bits_toChange" is above zero.
   */
-   private static void reduceValueOf_a_when_a_bitwiseOR_b_equals_c(int index) {
-  
+   private static void reduceValueOf_a_when_a_bitwiseOR_b_equals_c(int index) {  
     for (int i = 0; i < 4; i++) {
       if (c_binary[index].charAt(i) == '1' && max_bits_toChange >= 1) {
         if (a_binary[index].charAt(i) == '1' && b_binary[index].charAt(i) == '1') {
@@ -137,7 +132,6 @@ public class Solution {
   }
 
   private static void initilialize_hexadecimalToBinary() {
-
     hexadecimalToBinary = new HashMap<Character, String>();
     for (int i = 0; i <= 9; i++) {
       char intToChar = (char) ('0' + i);
@@ -156,7 +150,6 @@ public class Solution {
   }
 
   private static void initilialize_binaryToHexadecimal() {
-
     binaryToHexadecimal = new HashMap<String, Character>();
     for (Character c : hexadecimalToBinary.keySet()) {
       binaryToHexadecimal.put(hexadecimalToBinary.get(c), c);
@@ -165,26 +158,22 @@ public class Solution {
   }
 
   private static String createString_binaryToHexadecimal(StringBuilder[] binary) {
-
     int index_start = 0;
     while (index_start < binary.length && binary[index_start].toString().equals("0000")) {
       index_start++;
     }
-
     if (index_start == binary.length) {
       return "0";
     }
-
+   
     StringBuilder a_resultsHexadecimal = new StringBuilder();
     for (int i = index_start; i < binary.length; i++) {
       a_resultsHexadecimal.append(binaryToHexadecimal.get(binary[i].toString()));
     }
-
     return a_resultsHexadecimal.toString();
   }
 
   private static StringBuilder[] createArray_hexadecimalToBinary(String input) {
-
     StringBuilder[] array = new StringBuilder[input.length()];
     for (int i = 0; i < input.length(); i++) {
       String binary = hexadecimalToBinary.get(input.charAt(i));
@@ -198,14 +187,13 @@ public class Solution {
     *
     * Each hexadecimal has to be converted to a complete binary set of four bits, 
     * i.e. including leading '0s', if any. Thus, if the leading '1' is not the bit 
-    * with the higest value, then the binary has to be supplemented with the corresponding 
-    * number of leading '0s'.
+    * with the higest value, then the binary has to be supplemented with 
+    * the corresponding number of leading '0s'.
     *
-All this is necessary since for each four-bit set, we have to compare the value of the bits index by index and, if needed, make changes so that 
-(a_binary[i].charAt(index)) 
-bitwise OR 
-(b_binary[I].charAt(index)) 
-= c_binary[i].charAt(index).
+    * All this is necessary since for each four-bit set, we have to compare the value 
+    * of the bits index by index and, if needed, make changes so that:
+    * (a_binary[i].charAt(index)) (bitwise OR) (b_binary[I].charAt(index)) 
+    * = c_binary[i].charAt(index).
     */
   private static String check_add_leadingZeros(String binary) {
     if (binary.length() == 4) {
