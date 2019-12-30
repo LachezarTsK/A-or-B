@@ -4,13 +4,20 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Solution {
+ /**
+   * The input strings of hexadecimal numbers can be quite long. 
+   * Map "hexadecimalToBinary" and Map "binaryToHexadecimal" 
+   * are implemented in order to avoid creating from scratch 
+   * a string for every conversion from hexadecimal to binary 
+   * and vice versa, thus streamlining the application.
+   */
+  private static Map<Character, String> hexadecimalToBinary;
+  private static Map<String, Character> binaryToHexadecimal;
   private static int max_bits_toChange;
   private static StringBuilder[] a_binary;
   private static StringBuilder[] b_binary;
   private static StringBuilder[] c_binary;
-  private static Map<Character, String> hexadecimalToBinary;
-  private static Map<String, Character> binaryToHexadecimal;
-
+  
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     int numberOfQueries = scanner.nextInt();
@@ -47,6 +54,17 @@ public class Solution {
     System.out.println(b_resultsHexadecimal);
   }
 
+  /**
+    * Calculates the total results. The method runs as long as the value "max_bits_toChange" 
+    * allows to make changes in "a_binary" and/or "b_binary"
+    *
+    * If the value "max_bits_toChange" is large enough to make only all mandatory changes, 
+    * then the method will run only the first of the two loops.
+    *
+    * If the value "max_bits_toChange" is large enoguh to make both all mandatory changes 
+    * and those changes that reduce as much as possible the value of a_binary, 
+    * then the method will run the completely the two loops.
+    */
   private static void calculateResults() {
 
     for (int i = 0; i < c_binary.length && max_bits_toChange >= 0; i++) {
@@ -57,7 +75,17 @@ public class Solution {
       reduceValueOf_a_when_a_bitwiseOR_b_equals_c(i);
     }
   }
-
+  
+/**
+  * The method, if necessary, makes mandatory changes in the current four-bit set of 
+  * a_binary[i] and/or of b_binary[i] so that: 
+  *
+  * (a_binary[i].charAt(index)) (bitwise OR) (b_binary[i].charAt(index)) 
+  * = c_binary[i].charAt(index).
+  *
+  * With every mandatory change, the value of "max_bits_toChange" is decreased with one.  
+  * The method is initiated as long as the value of "max_bits_toChange" is not negative.
+  */
   private static void makeMandatoryChanges_a_bitwiseOR_b_equals_c(int index) {
 
     for (int i = 0; i < 4; i++) {
@@ -79,8 +107,18 @@ public class Solution {
     }
   }
 
-  private static void reduceValueOf_a_when_a_bitwiseOR_b_equals_c(int index) {
-
+/**
+  * The method reduces as much as possible the value of the current four-bit set of a_binary[i], 
+  * while preserving the relationship of:
+  *
+  * (a_binary[i].charAt(index)) (bitwise OR) (b_binary[i].charAt(index)) 
+  * = c_binary[i].charAt(index).
+  *
+  * With every change, the value of "max_bits_toChange" is decreased with one.  
+  * The method is initiated as long as the value of "max_bits_toChange" is above zero.
+  */
+   private static void reduceValueOf_a_when_a_bitwiseOR_b_equals_c(int index) {
+  
     for (int i = 0; i < 4; i++) {
       if (c_binary[index].charAt(i) == '1' && max_bits_toChange >= 1) {
         if (a_binary[index].charAt(i) == '1' && b_binary[index].charAt(i) == '1') {
@@ -155,6 +193,20 @@ public class Solution {
     return array;
   }
 
+  /**
+    * A helper method to method "initilialize_hexadecimalToBinary()". 
+    *
+    * Each hexadecimal has to be converted to a complete binary set of four bits, 
+    * i.e. including leading '0s', if any. Thus, if the leading '1' is not the bit 
+    * with the higest value, then the binary has to be supplemented with the corresponding 
+    * number of leading '0s'.
+    *
+All this is necessary since for each four-bit set, we have to compare the value of the bits index by index and, if needed, make changes so that 
+(a_binary[i].charAt(index)) 
+bitwise OR 
+(b_binary[I].charAt(index)) 
+= c_binary[i].charAt(index).
+    */
   private static String check_add_leadingZeros(String binary) {
     if (binary.length() == 4) {
       return "";
