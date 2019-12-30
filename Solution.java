@@ -186,7 +186,7 @@ public class Solution {
     *
     * Each hexadecimal has to be converted to a complete binary set of four bits, 
     * i.e. including leading '0s', if any. Thus, if the leading '1' is not the bit 
-    * with the higest value, then the binary has to be supplemented with 
+    * with the higest value, then the binary set has to be supplemented with 
     * the corresponding number of leading '0s'.
     *
     * All this is necessary since for each four-bit set, we have to compare the value 
