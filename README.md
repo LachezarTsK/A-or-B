@@ -9,7 +9,7 @@ The presented solution does not apply BigIntegers. Thechnically, the problem cou
 
 There several reason for this:
 1. The input is hexadecimal and has to be converted into decimal: 
-  input.nextBigInteger(16) or "new BigInteger (input, 16).
+   input.nextBigInteger(16) or new BigInteger (input, 16).
 2. The output is also a hexadecimal which requires once again time consuming convertion from decimal to hexadecimal:
    output.toString(16)
 3. The letters in the hexadecimal output are required to be upper case. However, the built-method of BigInteger for 
