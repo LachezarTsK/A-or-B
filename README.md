@@ -5,7 +5,7 @@ HackerRank>Practice>Algorithms>Bit Manipulation>A or B
 
 https://www.hackerrank.com/challenges/aorb/problem
 
-The presented solution does not apply BigIntegers. Thechnically, the problem could be solved with BigIntegers, applying the built-in methods flipBit() and testBit(). However, such solution will not fit into the alotted time frames for some test cases and thus nearly all test cases with large input will time out. 
+The presented solution does not apply BigIntegers. Thechnically, the problem could be solved with BigIntegers, applying the built-in methods flipBit() and testBit(). However, such solution will not fit into the alotted time frames for some test cases: nearly all test cases with large input will time out. 
 
 There several reason for this:
 1. The input is hexadecimal and has to be converted into decimal: 
