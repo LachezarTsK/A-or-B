@@ -10,9 +10,9 @@ The presented solution does not apply BigIntegers. Thechnically, the problem cou
 There several reason for this:
 1. The input is hexadecimal and has to be converted into decimal: 
    new BigInteger(input, 16) or input.nextBigInteger(16).
-2. The output is also a hexadecimal which requires once again time consuming convertion from decimal to hexadecimal:
+2. The output is also a hexadecimal which requires once again time consuming conversion from decimal to hexadecimal:
    output.toString(16).
-3. The letters in the hexadecimal output are required to be upper case. However, the built-method of BigInteger for 
-   convertion from decimal to hexadecimal returns it with small letters, thus additional time is required to convert all 
+3. The letters in the hexadecimal output are required to be upper case. However, the built-in method of BigInteger for 
+   conversion from decimal to hexadecimal returns it with small letters, thus additional time is required to convert all 
    letters in the hexadecimal output into upper case. Test cases with large input will time out, even if, instead of 
-   output.toUpperCase() some faster, custom-made methods for convertion from lower to upper case applied.
+   output.toUpperCase() some faster, custom-made methods for conversion from lower to upper case are applied.
